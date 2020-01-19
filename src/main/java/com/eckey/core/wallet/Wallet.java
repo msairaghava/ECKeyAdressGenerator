@@ -1,11 +1,7 @@
-package com.eckey.core;
+package com.eckey.core.wallet;
 
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 //import com.openwallet.core.CoreUtils;
+import com.eckey.core.CoreUtils;
 import com.openwallet.core.coins.CoinType;
 import com.openwallet.core.coins.Value;
 import com.openwallet.core.coins.families.BitFamily;
@@ -13,19 +9,33 @@ import com.openwallet.core.coins.families.NxtFamily;
 import com.openwallet.core.exceptions.UnsupportedCoinTypeException;
 import com.openwallet.core.protos.Protos;
 import com.openwallet.core.wallet.families.nxt.NxtFamilyWallet;
-import org.bitcoinj.crypto.*;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+
+import org.bitcoinj.crypto.DeterministicHierarchy;
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.HDKeyDerivation;
+import org.bitcoinj.crypto.KeyCrypter;
+import org.bitcoinj.crypto.MnemonicCode;
+import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.store.UnreadableWalletException;
 import org.bitcoinj.utils.Threading;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.WalletFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.bouncycastle.crypto.params.KeyParameter;
-import org.bouncycastle.util.encoders.Hex;
+import org.spongycastle.crypto.params.KeyParameter;
+import org.spongycastle.util.encoders.Hex;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,9 +43,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
+
+//import static com.openwallet.core.CoreUtils.bytesToMnemonic;
+import static com.eckey.core.CoreUtils.bytesToMnemonic;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.openwallet.core.CoreUtils.bytesToMnemonic;
 
 /**
  * @author John L. Jegutanis

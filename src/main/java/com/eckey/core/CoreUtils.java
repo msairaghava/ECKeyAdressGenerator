@@ -1,5 +1,6 @@
 package com.eckey.core;
 
+
 //import com.openwallet.core.wallet.AbstractAddress;
 import com.google.common.base.Joiner;
 
@@ -33,7 +34,7 @@ public class CoreUtils {
     }
 
     public static ArrayList<String> parseMnemonic(String mnemonicString) {
-        ArrayList<String> seedWords = new ArrayList<String>();
+        ArrayList<String> seedWords = new ArrayList<>();
         for (String word : mnemonicString.trim().split(" ")) {
             if (word.isEmpty()) continue;
             seedWords.add(word);

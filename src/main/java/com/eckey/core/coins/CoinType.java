@@ -1,10 +1,9 @@
-package com.eckey.core;
-
+package com.eckey.core.coins;
 
 import com.openwallet.core.coins.families.Families;
 import com.openwallet.core.exceptions.AddressMalformedException;
 import com.openwallet.core.messages.MessageFactory;
-import com.openwallet.core.util.MonetaryFormat;
+import com.eckey.core.util.MonetaryFormat;
 import com.openwallet.core.wallet.AbstractAddress;
 import com.google.common.base.Charsets;
 
